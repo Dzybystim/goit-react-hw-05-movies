@@ -1,30 +1,28 @@
 import {Routes, Route} from 'react-router-dom';
-import {NavigationBox} from './App.styled';
-import AppBar from 'components/AppBar/AppBar'
+import {lazy} from 'react'
 
-import Home from 'components/Home/Home'
-import Movies from 'pages/Movies/Movies'
-import MovieDetails from 'components/MovieDetails/MovieDetails'
-import Cast from 'components/Cast/Cast'
-import Reviews from 'components/Reviews/Reviews'
-import NotFound from 'components/NotFound/NotFound'
+import SharedLayout from 'components/SharedLayout/SharedLayout'
+import TrendingMovies from 'pages/TrendingMovies/TrendingMovies'
 
+
+const MovieDetails = lazy(() => import('components/MovieDetails/MovieDetails'))
+const Movies = lazy(() => import('pages/Movies/Movies'))
+const Cast = lazy(() => import('components/Cast/Cast'))
+const Reviews = lazy(() => import('components/Reviews/Reviews'))
 
 export const App = () => {
   return (
     <>
-    <NavigationBox>
-      <AppBar />
-    </NavigationBox>
     <Routes>
-      <Route path="/" element={<Home/>} />
-      <Route index element={<Home/>} />
+    <Route path="/"  element={<SharedLayout />}>
+      <Route index element={<TrendingMovies text={"Trending today"} />} />
       <Route path="/movies" element={<Movies />} />
       <Route path="/movies/:movieId" element={<MovieDetails />}>
         <Route path="cast" element={<Cast />} />
         <Route path="reviews" element={<Reviews />} />
-      </Route>   
-      <Route path="*" element={<NotFound />}/>
+      </Route>
+      <Route path="*" element={<TrendingMovies text={"Trending today"} /> } />
+    </Route>
     </Routes>
     </>
   );

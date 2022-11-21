@@ -1,7 +1,5 @@
+import PropTypes from 'prop-types'
 import {SearchFormStyled} from './SearchForm.styled'
-
-
-
 
 export default function SearchForm({onSubmitSearch}) {
 
@@ -16,4 +14,8 @@ placeholder="Search movies"
 <button type="submit">Search</button>
 </SearchFormStyled>
 
+}
+
+SearchForm.propTypes = {
+    onSubmitSearch: PropTypes.func.isRequired
 }

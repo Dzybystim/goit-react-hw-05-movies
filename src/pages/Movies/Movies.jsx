@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavItem} from "./Movies.styled"
-import {useSearchParams} from 'react-router-dom'
+import {useSearchParams, useLocation} from 'react-router-dom'
 import SearchForm from 'components/SearchForm/SearchForm'
 
 export default function Movies() {
@@ -9,7 +9,7 @@ export default function Movies() {
 let [titleMovies, setTitleMovies] = useState("");
 const [searchParams, setSearchParams] = useSearchParams()
 const filter = searchParams.get('filter') ?? '';
-
+const location = useLocation()
 
 useEffect(() => {
     if(filter === "") return
@@ -34,23 +34,16 @@ useEffect(() => {
 const onSubmitSearch = event => {
     event.preventDefault();
     const form = event.currentTarget;
-    setSearchParams({filter: form.elements.movie.value})
-    form.reset();
+    setSearchParams({filter: form.elements.movie.value});
+    form.elements.movie.value = "";
 }
 
-
-
-
-
-
     return <>
-    <SearchForm 
-    onSubmitSearch={onSubmitSearch}
-    />
+    <SearchForm onSubmitSearch={onSubmitSearch}/>
     <ul>
         {titleMovies && titleMovies.map(({id, name, title}) => {
         return <li key={id}>
-            <NavItem to={`${id}`}> {name || title} </NavItem>
+            <NavItem to={`${id}`} state={{from: location}}> {name || title} </NavItem>
             </li>
         })}
     </ul>

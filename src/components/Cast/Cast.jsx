@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import {useParams} from 'react-router-dom'
 import { useState, useEffect} from "react";
 import {LayoutImage, Image, CastBox, LiCast} from './Cast.styled'
@@ -46,4 +48,9 @@ export default function Cast() {
         })}
         </CastBox>
     </div>
+}
+
+
+Cast.propTypes = {
+    state: PropTypes.object.isRequired
 }

@@ -1,5 +1,5 @@
-import {useParams} from 'react-router-dom'
-import React, { useEffect, useState} from "react";
+import {useParams, Link, useLocation, Outlet} from 'react-router-dom'
+import { useEffect, useState, Suspense} from "react";
 import {LayoutImage, Image, MainDetailsMovie, LayotImageDescription} from "./MovieDetails.styled"
 import AditionalInformation from 'components/AditionalInformation/AditionalInformation'
 
@@ -11,6 +11,8 @@ export default function MovieDetails() {
 
     let [dataMovie, setDataMovie] = useState('')
    
+    const location = useLocation()
+
     useEffect(() => {
         const fetchDetailsMovies = async () => {
             try{
@@ -54,11 +56,12 @@ export default function MovieDetails() {
         return genre
       }
 
-
+    const backLinkHref = location.state?.from ?? "/"
 
     let {poster_path, title, name, release_date, first_air_date, vote_average, overview, genres} = dataMovie
 
     return <>
+        <Link to={backLinkHref}>Go back</Link>
         <MainDetailsMovie>
         <LayoutImage>
         <Image src={poster_path && `${pathPoster}${sizePoster}${poster_path}`} alt={title || name} />
@@ -72,6 +75,9 @@ export default function MovieDetails() {
          <p>{processingGenre(genres)}</p>
         </LayotImageDescription>
         </MainDetailsMovie>
-        <AditionalInformation movieId={movieId}/>
+        <AditionalInformation state={{from: backLinkHref}}/>
+        <Suspense fallback={<div>Loading subpage...</div>}>
+        <Outlet />
+        </Suspense>
     </>
 }

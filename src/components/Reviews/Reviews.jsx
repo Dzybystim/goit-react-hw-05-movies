@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import {useParams} from 'react-router-dom'
 import { useState, useEffect} from "react";
 
@@ -39,4 +40,8 @@ export default function Reviews() {
             })}
         </ul>
     </div>
+}
+
+Reviews.propTypes = {
+    state: PropTypes.object.isRequired
 }

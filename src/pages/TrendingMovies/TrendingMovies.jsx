@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import React, { useEffect, useState} from "react";
 import {Link} from 'react-router-dom'
 
@@ -24,9 +26,6 @@ export default function TrendingMovies({text}) {
   
     
     }, []);
- 
-    
-    
 
     return (
         <div>
@@ -42,3 +41,7 @@ export default function TrendingMovies({text}) {
         </div>
     )
 }
+
+TrendingMovies.propTypes = {
+    text: PropTypes.string.isRequired
+  };
